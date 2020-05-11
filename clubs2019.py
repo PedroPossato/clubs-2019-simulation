@@ -45,67 +45,85 @@ if debug:
     lightSpeed = True
 else:
     while True:
-        a = input("Qual modo deseja jogar?\n[BRASILEIRAO] = 0\n[PREMIER LEAGUE] = 1\n[AMISTOSO] = 2\n[SIMULACAO BRASILEIRAO] = 3\n[SIMULACAO PREMIER LEAGUE] = 4\n")
-        if a == '0' or a == '1' or a == '2' or a == '3' or a == '4':
+        numModos = 7
+        a = input("Qual modo deseja jogar?\n[BRASILEIRAO] = 0\n[PREMIER LEAGUE] = 1\n[BUNDESLIGA] = 2\n[AMISTOSO] = 3\n[SIMULACAO BRASILEIRAO] = 4\n[SIMULACAO PREMIER LEAGUE] = 5\n[SIMULACAO BUNDESLIGA] = 6\n")
+        if a == '0' or a == '1' or a == '2' or a == '3' or a == '4' or a == '5' or a == '6':
             break
         else:
             print("Valor invalido! Tente novamente...")
     a = int(a)
     lightSpeed = False
-    if a > 2:
+    if a > (numModos-1)/2:
         lightSpeed = True
     amistoso = False
-    if a == 2:
+    if a == (numModos-1)/2:
         amisoso = True
 
 gols = 0
 jogos = 0
-
-times =         ['FLAMENGO',    'SANTOS',   'PALMEIRAS',    'GREMIO',   'ATHLETICO-PR', 'SAO PAULO',    'INTERNACIONAL',    'CORINTHIANS', 'FORTALEZA', 'GOIAS',    'BAHIA',    'VASCO',    'ATLETICO-MG',  'FLUMINENSE',   'BOTAFOGO', 'CEARA',    'CRUZEIRO', 'CSA',      'CHAPECOENSE',  'AVAI',     'LIVERPOOL',   'MANCHESTER CITY',      'LEICESTER',    'CHELSEA',      'MANCHESTER UNITED',    'WOLVERHAMPTON',    'SHEFFIELD UNITED', 'TOTTENHAM',    'ARSENAL',  'BURNLEY',  'CRYSTAL PALACCE',  'EVERTON',  'NEWCASTLE',    'SOUTHAMPTON',  'BRIGHTON', 'WEST HAM', 'WATFORD',  'BOURNEMOUTH',  'ASTON VILLA',  'NORWICH'   ]
-power =         [2.32432,       1.81818,    1.90625,        1.64103,    1.59375,        1.3,            1.12821,            1.2353,        1.02041,     0.71875,    1.02326,    0.86667,    0.91837,        0.82609,        0.68889,    0.87805,    0.58696,    0.41379,    0.59615,        0.29032,    3.96971,       2.77065,                2.61640,        1.65173,        1.85253,                1.52314,            1.51571,            1.48413,        1.40343,    1.07363,    1.02626,            1.01596,    0.77018,        0.85016,        1.01047,    0.88416,    0.77508,    0.77935,        0.76688,        0.60725     ]
-offensiveness = [2.20361,       1.37119,    1.3518,         1.72853,    1.13019,        0.81025,        1.18837,            0.98892,       1.69668,     2.03878,    1.31025,    1.21537,    1.52701,        1.21053,        0.96607,    1.02216,    0.86011,    0.96399,    1.11634,        0.77285,    1.64804,       2.68878,                1.93103,        2.36504,        1.56956,                1.65755,            0.95663,            2.23543,        1.83673,    1.61712,    0.98930,            2.02378,    1.21879,        2.16409,        1.52200,    2.08086,    1.41260,    1.62069,        2.42857,        1.54578     ]
-vogal =         ['o',           'o',        'o',            'o',        'o',            'o',            'o',                'o',            'o',        'o',            'o',    'o',            'o',        'o',            'o',        'o',        'o',        'o',        'a',            'o',        'o',           'o',                    'o',            'o',            'o',                    'o',                'o',                'o',            'o',        'o',        'o',                'o',        'o',            'o',            'o',        'o',        'o',        'o',            'o',            'o'         ]
+# power premier league *= 1.26309
+# power bundesliga *= 1.07231
+times =         ['FLAMENGO',    'SANTOS',   'PALMEIRAS',    'GREMIO',   'ATHLETICO-PR', 'SAO PAULO',    'INTERNACIONAL',    'CORINTHIANS', 'FORTALEZA', 'GOIAS',    'BAHIA',    'VASCO',    'ATLETICO-MG',  'FLUMINENSE',   'BOTAFOGO', 'CEARA',    'CRUZEIRO', 'CSA',      'CHAPECOENSE',  'AVAI',     'LIVERPOOL',   'MANCHESTER CITY',      'LEICESTER',    'CHELSEA',      'MANCHESTER UNITED',    'WOLVERHAMPTON',    'SHEFFIELD UNITED', 'TOTTENHAM',    'ARSENAL',  'BURNLEY',  'CRYSTAL PALACCE',  'EVERTON',  'NEWCASTLE',    'SOUTHAMPTON',  'BRIGHTON', 'WEST HAM', 'WATFORD',  'BOURNEMOUTH',  'ASTON VILLA',  'NORWICH',   'BAYERN MUNCHEN',   'DORTMUND', 'LEIPZIG',  'MONCHENGLADBACH',  'BAYER LEVERKUSEN', 'SCHALKE 04',   'WOLFSBURG',    'FREIBURG', 'HOFFENHEIM',   'KOLN',     'UNION BERLIN', 'EINTRACHT FRANKFURT',  'HERTHA BERLIN',    'AUGSBURG', 'MAINZ 05', 'DUSSELDORF',   'WERDER BREMEN',    'PADERBORN 07'  ]
+power =         [2.32432,       1.81818,    1.90625,        1.64103,    1.59375,        1.3,            1.12821,            1.2353,        1.02041,     0.71875,    1.02326,    0.86667,    0.91837,        0.82609,        0.68889,    0.87805,    0.58696,    0.41379,    0.59615,        0.29032,    3.96971,       2.77065,                2.61640,        1.65173,        1.85253,                1.52314,            1.51571,            1.48413,        1.40343,    1.07363,    1.02626,            1.01596,    0.77018,        0.85016,        1.01047,    0.88416,    0.77508,    0.77935,        0.76688,        0.60725,     3.01072,            2.20961,    2.55705,    1.75144,            1.60847,            0.98295,        1.21528,        1.04167,    0.87281,        0.92934,    0.83692,        0.99385,                0.71487,            0.74237,    0.68790,    0.57905,        0.52641,            0.59573         ]
+offensiveness = [2.20361,       1.37119,    1.3518,         1.72853,    1.13019,        0.81025,        1.18837,            0.98892,       1.69668,     2.03878,    1.31025,    1.21537,    1.52701,        1.21053,        0.96607,    1.02216,    0.86011,    0.96399,    1.11634,        0.77285,    1.64804,       2.68878,                1.93103,        2.36504,        1.56956,                1.65755,            0.95663,            2.23543,        1.83673,    1.61712,    0.98930,            2.02378,    1.21879,        2.16409,        1.52200,    2.08086,    1.41260,    1.62069,        2.42857,        1.54578,     3.03680,            3.59040,    2.57920,    2.35200,            2.16000,            1.90080,        1.63200,        1.90400,    2.40800,        2.80800,    2.09920,        2.70486,                2.45760,            2.99520,    2.88320,    2.16000,        2.57813,            2.59200         ]
+vogal =         ['o',           'o',        'o',            'o',        'o',            'o',            'o',                'o',            'o',        'o',            'o',    'o',            'o',        'o',            'o',        'o',        'o',        'o',        'a',            'o',        'o',           'o',                    'o',            'o',            'o',                    'o',                'o',                'o',            'o',        'o',        'o',                'o',        'o',            'o',            'o',        'o',        'o',        'o',            'o',            'o',         'o',                'o',        'o',        'o',                'o',                'o',            'o',            'o',        'o',            'o',        'o',            'o',                    'o',                'o',        'o',        'o',            'o',                'o'             ]
 atk = []
 defense = []
 fieldFactor =   []
 # fieldFactorBrasileirao = 20%
 # fieldFactorPremier = 11%
+# fieldFactorBundesliga = 8%
 for i in range(len(times)):
     if i < 20:
         fieldFactor.append(0.2)
-    else:
+    elif i < 40:
         fieldFactor.append(0.11)
+    else:
+        fieldFactor.append(0.08)
 for i in range(len(times)):
     atk.append( sqrt( offensiveness[i] * power[i] ) )
     defense.append( sqrt( offensiveness[i]/(power[i]*1.0) ) )
-mediaGolsBrasileirao =      2.775 # Por meio de simulacoes, com esse valor chegamos em 2.305 ¯\_(ツ)_/¯
-mediaGolsPremierLeague   =  2.34 # Por meio de simulacoes, com esse valor chegamos em 2.722 ¯\_(ツ)_/¯
+mediaGolsBrasileirao    =  3.300 # Por meio de simulacoes, com esse valor chegamos em 2.305 gols por partida em media ¯\_(ツ)_/¯
+mediaGolsPremierLeague  =  2.774 # Por meio de simulacoes, com esse valor chegamos em 2.722 gols por partida em media ¯\_(ツ)_/¯
+mediaGolsBundesliga     =  2.340 # Por meio de simulacoes, com esse valor chegamos em 3.250 gols por partida em media ¯\_(ツ)_/¯
 atkMedioBrasileirao = 2 * sum(atk)/len(atk) * sum(atk)/len(atk) / mediaGolsBrasileirao
 defenseMedioBrasileirao = 2 * sum(defense)/len(defense) * sum(defense)/len(defense) / mediaGolsBrasileirao
 atkMedioPremierLeague = 2 * sum(atk)/len(atk) * sum(atk)/len(atk) / mediaGolsPremierLeague
 defenseMedioPremierLeague = 2 * sum(defense)/len(defense) * sum(defense)/len(defense) / mediaGolsPremierLeague
+atkMedioBundesliga = 2 * sum(atk)/len(atk) * sum(atk)/len(atk) / mediaGolsBundesliga
+defenseMedioBundesliga = 2 * sum(defense)/len(defense) * sum(defense)/len(defense) / mediaGolsBundesliga
+
 for i in range(len(times)):
     if i < 20:
         atk[i] = atk[i] / sqrt(atkMedioBrasileirao)
         defense[i] = defense[i] / sqrt(defenseMedioBrasileirao)
-    else:
+    elif i < 40:
         atk[i] = atk[i] / sqrt(atkMedioPremierLeague)
         defense[i] = defense[i] / sqrt(defenseMedioPremierLeague)
+    else:
+        atk[i] = atk[i] / sqrt(atkMedioBundesliga)
+        defense[i] = defense[i] / sqrt(defenseMedioBundesliga)
 
-if a%3 == 0:
+if a%((numModos+1)/2) == 0:
     times =         times[:20]
     power =         power[:20]
     offensiveness = offensiveness[:20]
     atk =           atk[:20]
     defense =       defense[:20]
 
-# power premier league *= 1.26309
-elif a%3 == 1:
-    times =         times[20:]
-    power =         power[20:]
-    offensiveness = offensiveness[20:]
-    atk = atk[20:]
-    defense = defense[20:]
+elif a%((numModos+1)/2) == 1:
+    times =         times[20:40]
+    power =         power[20:40]
+    offensiveness = offensiveness[20:40]
+    atk = atk[20:40]
+    defense = defense[20:40]
+
+elif a%((numModos+1)/2) == 2:
+    times =         times[40:]
+    power =         power[40:]
+    offensiveness = offensiveness[40:]
+    atk =           atk[40:]
+    defense =       defense[40:]
 
 print()
 aux = times[:]
@@ -345,12 +363,12 @@ def playGrupo(grupo):
         jogosCasa = []
         for i in range(len(times)):
             jogosCasa.append(0)
-        for i in range(19):
+        for i in range(len(times)-1):
             if i and not lightSpeed:
                 input("Pressione ENTER para continuar...")
             if not lightSpeed:
                 print("\nRodada {}:".format(i+1+19*turno))
-            for j in range(10):
+            for j in range(int(len(times)/2)):
                 if not j:
                     x = 0
                 else:
@@ -401,7 +419,7 @@ def main():
         pontos = []
         for i in times:
             pontos.append(0)
-        if a%3 < 2:
+        if a%((numModos+1)/2) < (numModos-1)/2:
             if not lightSpeed:
                 print("Comeca o campeonato!\n")
 
@@ -443,7 +461,7 @@ def main():
         order_map(times, vezesCampeao, 1)
         #order_map(meta, aux, 1)
         print("Numero de Simulacoes realizadas: {}\nTempo de execucao: {:.2f} segundos".format(numSimuls, time() - inicio))
-        print("Media de gols por jogo: {:.2f}".format(gols/(jogos*1.0)))
+        print("Media de gols por jogo: {:.3f}".format(gols/(jogos*1.0)))
         for i in range(len(times)):
             #if debug:
                 #debugMessage = '\t\t[DEVERIA SER: ' + str(meta[i]*numSimuls/10000.0) + ']'
